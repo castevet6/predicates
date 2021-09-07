@@ -37,13 +37,19 @@
     (every? (fn [award] (contains? book-awards award)) awards)))
 
 (defn my-some [pred a-seq]
-  (let [mapped (map pred a-seq)
-        filtered (filter (fn [x] (= x true) mapped))]
-    (first filtered)))
+  (let [filtered (filter pred a-seq)]
+    (if (empty? filtered)
+      false
+      (pred (first filtered)))))
 
 (defn my-every? [pred a-seq]
-  :-)
+  (let [filtered (filter (complement pred) a-seq)]
+    (if (empty? filtered)
+      true
+      false)))
+
 
 (defn prime? [n]
-  :-)
+  (let [pred (fn [x] (= (mod n x) 0))]
+    (not (some pred (range 2 n)))))
 ;^^
